@@ -4,16 +4,17 @@
   "description": "Lectures 04-05 - JavaScript on backend: NodeJS. Hometask",
   "main": "index.js",
   "scripts": {
-    "test": "karma start --single-run"
+    "test": "karma start --single-run",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/addonin/node.git"
+    "url": "https://github.com/addonin/node.git"
   },
   "author": "Dmitry Adonin <Dmytro_Adonin@epam.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/addonin/node/issues"
   },
-  "homepage": "https://github.com/addonin/node#readme"
+  "homepage": "https://github.com/addonin/node"
 }
