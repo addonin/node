@@ -4,8 +4,8 @@
   "description": "Lectures 04-05 - JavaScript on backend: NodeJS. Hometask",
   "main": "index.js",
   "scripts": {
-    "test": "karma start --single-run",
-    "start": "node app.js"
+    "test" : "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/addonin/node/issues"
   },
-  "homepage": "https://github.com/addonin/node"
+  "homepage": "https://github.com/addonin/node",
+  "devDependencies": {
+    "express": "^4.16.2"
+  }
 }
