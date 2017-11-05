@@ -1,14 +1,14 @@
 const fs = require('fs');
 const path = require('path');
 
+module.exports = {
+    csvToJson: csvToJson,
+    jsonToCsv: jsonToCsv
+};
+
 function csvToJson(filename) {
-    const filePath = path.join(__dirname, '../resource/' + filename);
-    let file = fs.readFileSync(filePath, { encoding: 'utf-8' },
-                               function (err) {
-                                   console.log(err);
-                               })
-                 .split('\n');
-    let headers = file.shift().split(",");
+    let file = readFile(filename);
+    let headers = extractHeaders(file);
     let json = [];
     file.forEach(function(item) {
         let tmp = {};
@@ -21,4 +21,49 @@ function csvToJson(filename) {
     return json;
 }
 
-module.exports = csvToJson;
+function jsonToCsv(json, filename) {
+    let file = readFile(filename);
+    let headers = extractHeaders(file);
+    try {
+        let res = [];
+        for (let i = 0; i < headers.length; i++) {
+            let key = headers[i];
+            if (key in json) {
+                res.push(json[key]);
+            } else {
+                throw new Error(key + ' should be exist');
+            }
+        }
+        saveFile(res.join(','), filename);
+    } catch (e) {
+        return 'Failed to parse new medical: ' + e.message;
+    }
+    return 'New medical was successfully added';
+}
+
+function readFile(filename) {
+    return fs.readFileSync(getFilePath(filename), { encoding: 'utf-8' },
+        function (err) {
+            console.log(err);
+        })
+        .split('\n');
+}
+
+function saveFile(data, filename) {
+    console.log(data)
+    console.log(getFilePath(filename))
+    fs.appendFile(getFilePath(filename), data, function(err) {
+        if (err) {
+            console.log(err);
+            return 'Failed to save data';
+        }
+    });
+}
+
+function getFilePath(filename) {
+    return path.join(__dirname, '../resource/' + filename);
+}
+
+function extractHeaders(file) {
+    return file.shift().split(",");
+}
