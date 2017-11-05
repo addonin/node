@@ -8,6 +8,13 @@ router.get('/', function(req, res) {
     res.send(converter.csvToJson(datasource));
 });
 
+router.get('/:id', function(req, res) {
+    let id = req.params['id'];
+    let medical = converter.getMedical(id, datasource);
+    res.render('medical',
+               { title: medical.name, medical: medical})
+});
+
 router.post('/', function(req, res) {
     // Wrong request: curl -d '{"idd":"wrong key"}' -H "Content-Type: application/json" http://127.0.0.1:3000/medicals
     // Good request: curl -d '{"id":"10","name":"Triamcinolone Acetonide","brand":"Triamcinolone Acetonide","company":"Arbor Pharmaceuticals Inc.","price":"$27.16","isbn":"311113295-197"}' -H "Content-Type: application/json" http://127.0.0.1:3000/medicals

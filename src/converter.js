@@ -3,7 +3,8 @@ const path = require('path');
 
 module.exports = {
     csvToJson: csvToJson,
-    jsonToCsv: jsonToCsv
+    jsonToCsv: jsonToCsv,
+    getMedical: getMedical
 };
 
 function csvToJson(filename) {
@@ -19,6 +20,14 @@ function csvToJson(filename) {
         json.push(tmp);
     });
     return json;
+}
+
+function getMedical(id, filename) {
+    let all = csvToJson(filename);
+    for (let index in all) {
+        if (all[index].id === id) return all[index];
+    }
+    return {};
 }
 
 function jsonToCsv(json, filename) {
