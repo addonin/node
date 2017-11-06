@@ -7,6 +7,8 @@ module.exports = {
     getMedical: getMedical
 };
 
+let counter = 100; // naive implementation of ID counter
+
 function csvToJson(filename) {
     let file = readFile(filename);
     let headers = extractHeaders(file);
@@ -34,20 +36,20 @@ function jsonToCsv(json, filename) {
     let file = readFile(filename);
     let headers = extractHeaders(file);
     try {
-        let res = [];
-        for (let i = 0; i < headers.length; i++) {
+        let res = [counter++];
+        for (let i = 1; i < headers.length; i++) {
             let key = headers[i];
             if (key in json) {
                 res.push(json[key]);
             } else {
-                throw new Error(key + ' should be exist');
+                throw new Error(key + ' should be exist\n');
             }
         }
         saveFile(res.join(','), filename);
     } catch (e) {
-        return 'Failed to parse new medical: ' + e.message;
+        return 'Failed to parse new medical: ' + e.message + '\n';
     }
-    return 'New medical was successfully added';
+    return 'New medical was successfully added\n';
 }
 
 function readFile(filename) {
@@ -59,12 +61,10 @@ function readFile(filename) {
 }
 
 function saveFile(data, filename) {
-    console.log(data)
-    console.log(getFilePath(filename))
-    fs.appendFile(getFilePath(filename), data, function(err) {
+    fs.appendFile(getFilePath(filename), '\n' + data, function(err) {
         if (err) {
             console.log(err);
-            return 'Failed to save data';
+            return 'Failed to save data\n';
         }
     });
 }
